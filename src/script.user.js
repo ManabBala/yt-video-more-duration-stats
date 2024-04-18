@@ -1,6 +1,8 @@
 // ==UserScript==
 // @name         YT Video More Duration Stats
 // @namespace    ByManab
+// @source       https://github.com/ManabBala/yt-video-more-duration-stats
+// @supportURL   https://github.com/ManabBala/yt-video-more-duration-stats
 // @version      1.0.1
 // @description  This will show the time spent on the video, video's modified duration according to playback speed, time left of the video, percent been watched and percent left.
 // @author       Manab Bala
@@ -51,8 +53,6 @@
 		padding: 3px
 	}
 
-
-	
 	`);
 
 	/**
