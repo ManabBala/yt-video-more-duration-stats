@@ -16,6 +16,7 @@
 
 (function () {
 	("use strict");
+	window.trustedTypes.createPolicy('default', { createHTML: (string, sink) => string })
 
 	let oldLog = console.log;
 	/**
