@@ -18,14 +18,17 @@
 	("use strict");
 	window.trustedTypes.createPolicy('default', { createHTML: (string, sink) => string })
 
+	let DEBUG = true;
 	let oldLog = console.log;
 	/**
 	 * Custom logging function copied from `console.log`
 	 * @param  {...any} args `console.log` arguments
 	 * @returns {void}
 	 */
-	const logger = (...args) =>
+	const logger = (...args) => {
+		if (!DEBUG) return;
 		oldLog.apply(console, ["\x1b[31m[YT Video Detector]\x1b[0m", ...args]);
+	};
 
 	logger("YT Video Detector Launched!");
 
@@ -313,7 +316,7 @@
 				(e) => {
 					// if add playing then skip the video update listener.
 					// TODO: ELEMENT.style.display not working!
-					const isAdPlaying = Boolean(document.querySelector(".video-ads").checkVisibility());
+					const isAdPlaying = Boolean(document.querySelector(".video-ads")?.checkVisibility());
 					if (isAdPlaying) {
 						logger("add running, skipping video update listener");
 						return;
@@ -342,16 +345,14 @@
 			return;
 		}
 
-		// console.log("Video detect event: ", e);
-		const temp_video_data = e.detail.getVideoData();
+		logger("Video detect event: ", e);
+
+		const videoData = e.target.querySelector(".html5-video-player")?.getVideoData()
 
 		VIDEO_DATA = {
-			current_time: e.detail.getCurrentTime(),
-			video_duration: e.detail.getDuration(),
-			video_url: e.detail.getVideoUrl(),
-			video_author: temp_video_data?.author,
-			video_title: temp_video_data?.title,
-			video_id: temp_video_data?.video_id,
+			video_author: videoData?.author,
+			video_title: videoData?.title,
+			video_id: videoData?.video_id
 		};
 
 		logger("Video data updated", VIDEO_DATA);
